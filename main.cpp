@@ -5,6 +5,20 @@
 #include <thread> // for sleep_for
 
 
+/*
+FUNCTION sortByScore(entries)
+    FOR i FROM 0 TO length(entries) - 1
+        FOR j FROM i + 1 TO length(entries)
+            IF entries[i].value > entries[j].value THEN
+                SWAP entries[i] AND entries[j]
+            END IF
+        END FOR
+    END FOR
+    RETURN entries
+END FUNCTION
+*/
+
+
 void progressBar(int width = 20, int totalMs = 1000) {
     std::cout << "[";
     for (int i = 0; i < width; ++i) {
