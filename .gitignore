@@ -1,0 +1,4 @@
+leaderboard
+*.o
+*.exe
+*.DS_Store
