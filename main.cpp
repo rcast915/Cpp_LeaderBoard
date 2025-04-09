@@ -1,9 +1,8 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <sstream>
-#include <thread> // for sleep_for
-
+#include <iostream>      // For standard I/O (cin, cout)
+#include <vector>        // For dynamic array (std::vector)
+#include <string>        // For std::string
+#include <sstream>       // For parsing strings using istringstream
+#include <thread>        // For std::this_thread::sleep_for (pause execution)
 
 /*
 FUNCTION sortByScore(entries)
@@ -18,50 +17,52 @@ FUNCTION sortByScore(entries)
 END FUNCTION
 */
 
-
+// Useless function just makes your program slower but your terminal is cool
 void progressBar(int width = 20, int totalMs = 1000) {
     std::cout << "[";
     for (int i = 0; i < width; ++i) {
-        std::cout << "#" << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(totalMs / width));
+        std::cout << "#" << std::flush; // Flush forces output immediately instead of buffering
+        std::this_thread::sleep_for(std::chrono::milliseconds(totalMs / width)); // Sleep for part of total time
     }
     std::cout << "]\n";
 }
 
 // TEMPLATE CLASS
+// Allows the leaderboard to be used with any numeric type (int, float, double, etc.)
 template <typename T>
 class Leaderboard {
 private:
-    std::vector<std::pair<std::string, T>> entries;
-    static int totalEntries;
+    std::vector<std::pair<std::string, T>> entries; // Stores name and score pairs
+    static int totalEntries; // Shared across all instances (C++ quirk: must be defined outside class)
 
 public:
-    void addEntry(const std::string& name, T score);
-    void print() const;
+    void addEntry(const std::string& name, T score); // Adds entry to list
+    void print() const;                              // Prints the leaderboard
 };
 
 // SCOPE RESOLUTION OPERATOR + STATIC INITIALIZATION
+// Static member needs to be defined outside the class template
 template <typename T>
 int Leaderboard<T>::totalEntries = 0;
 
 template <typename T>
 void Leaderboard<T>::addEntry(const std::string& name, T score) {
-    entries.push_back({name, score});
-    ++totalEntries;
+    entries.push_back({name, score}); // Adds name-score pair to vector
+    ++totalEntries;                   // Increments static counter
 }
 
 template <typename T>
 void Leaderboard<T>::print() const {
     std::cout << "\nLeaderboard\n";
     for (const auto& entry : entries) {
-        std::cout << entry.first << ": " << entry.second << "\n";
+        std::cout << entry.first << ": " << entry.second << "\n"; // Print each entry
     }
 
-    std::cout << "Total entries: " << totalEntries << "\n";
+    std::cout << "Total entries: " << totalEntries << "\n"; // Print static count
 }
 
 int main() {
-    Leaderboard<double> lb;
+    Leaderboard<double> lb; // Instantiate Leaderboard with double scores
     std::string name;
     std::string input;
     double score;
@@ -71,24 +72,25 @@ int main() {
 
     while (true) {
         std::cout << "> ";
-        std::getline(std::cin, input);
+        std::getline(std::cin, input); // Reads full line of input (safer than std::cin)
 
         if (input == "done") break;
 
-        std::istringstream iss(input);
-        iss >> name >> score;
+        std::istringstream iss(input); // Use string stream to parse input
+        iss >> name >> score;          // Extract name and score from string
 
         if (iss) {
-            lb.addEntry(name, score);
+            lb.addEntry(name, score);  // Add valid input to leaderboard
         } else {
-            std::cerr << "⚠️ Invalid input. Try again.\n";
+            std::cerr << "⚠️ Invalid input. Try again.\n"; // Input parse failed (extra or missing tokens)
         }
     }
 
-
     // Help me sort the leaderboard by score in descending order
-    //lb.sortByScore();
-    progressBar();
-    lb.print();
+    //lb.sortByScore(); // Placeholder for future sorting implementation
+
+    progressBar(); // Display fake loading bar for effect
+    lb.print();    // Show the leaderboard
     return 0;
 }
+
