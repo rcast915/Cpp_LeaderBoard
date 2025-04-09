@@ -6,19 +6,6 @@
 
 // g++ -std=c++17 -o leaderboard main.cpp  
 
-/*
-FUNCTION sortByScore(entries)
-    FOR i FROM 0 TO length(entries) - 1
-        FOR j FROM i + 1 TO length(entries)
-            IF entries[i].value > entries[j].value THEN
-                SWAP entries[i] AND entries[j]
-            END IF
-        END FOR
-    END FOR
-    RETURN entries
-END FUNCTION
-*/
-
 // Useless function just makes your program slower but your terminal is cool
 void progressBar(int width = 20, int totalMs = 1000) {
     std::cout << "[";
@@ -40,6 +27,7 @@ private:
 public:
     void addEntry(const std::string& name, T score); // Adds entry to list
     void print() const;                              // Prints the leaderboard
+    // void sortByScore(); 
 };
 
 // SCOPE RESOLUTION OPERATOR + STATIC INITIALIZATION
@@ -62,6 +50,21 @@ void Leaderboard<T>::print() const {
 
     std::cout << "Total entries: " << totalEntries << "\n"; // Print static count
 }
+
+/* 
+We Probably need a template function to sort the leaderboard by score | entries.size(); == number of entries
+FUNCTION sortByScore()
+    FOR i FROM 0 TO number of entries - 1
+        FOR j FROM i + 1 TO number of entries - 1
+            IF entries[i].score < entries[j].score THEN
+                SWAP entries[i] WITH entries[j]
+            END IF
+        END FOR
+    END FOR
+END FUNCTION
+*/
+
+
 
 int main() {
     Leaderboard<double> lb; // Instantiate Leaderboard with double scores
