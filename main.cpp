@@ -4,6 +4,8 @@
 #include <sstream>       // For parsing strings using istringstream
 #include <thread>        // For std::this_thread::sleep_for (pause execution)
 
+// g++ -std=c++17 -o leaderboard main.cpp  
+
 /*
 FUNCTION sortByScore(entries)
     FOR i FROM 0 TO length(entries) - 1
